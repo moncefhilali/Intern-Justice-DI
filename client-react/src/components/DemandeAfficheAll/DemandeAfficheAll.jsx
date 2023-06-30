@@ -23,7 +23,7 @@ const DemandeAfficheAll = () => {
 
   const getDemandes = () => {
     axios
-      .get("https://localhost:7165/api/Demande")
+      .get("https://localhost:7165/api/Demande/info")
       .then((result) => {
         setDataDemande(result.data);
       })
@@ -88,10 +88,14 @@ const DemandeAfficheAll = () => {
         <table className="tab_le">
           <thead>
             <tr className="tittre">
-              <th colSpan="4">Nombre de resultats : {dataDemande.length}</th>
+              <th colSpan="8">Nombre de resultats : {dataDemande.length}</th>
             </tr>
             <tr className="sousTitre">
               <th id="th-Center">#</th>
+              <th id="th-Center">Nom</th>
+              <th id="th-Center">Prénom</th>
+              <th id="th-Center">CIN</th>
+              <th id="th-Center">Entité</th>
               <th id="th-Center">Date de demande</th>
               <th id="th-Center">Statut</th>
               <th id="th-Center">Actions</th>
@@ -101,6 +105,10 @@ const DemandeAfficheAll = () => {
             {dataDemande.map((opts, i) => (
               <tr className="tr-ListProduit">
                 <td id="th-Center">{i + 1}</td>
+                <td id="th-Center">{opts.nom}</td>
+                <td id="th-Center">{opts.prenom}</td>
+                <td id="th-Center">{opts.cin}</td>
+                <td id="th-Center">{opts.entite}</td>
                 <td id="th-Center">
                   {format(new Date(opts.dateDemande), "dd/MM/yyyy")}
                 </td>
@@ -185,12 +193,20 @@ const DemandeAfficheAll = () => {
             <table id="popup-table">
               <thead>
                 <th id="th-Center">#</th>
+                <th id="th-Center">Nom</th>
+                <th id="th-Center">Prénom</th>
+                <th id="th-Center">CIN</th>
+                <th id="th-Center">Entité</th>
                 <th id="th-Center">Date de demande</th>
                 <th id="th-Center">Statut</th>
               </thead>
               <tbody>
                 <tr>
                   <td id="th-Center">{dN + 1}</td>
+                  <td id="th-Center">{dataDemande[dN].nom}</td>
+                  <td id="th-Center">{dataDemande[dN].prenom}</td>
+                  <td id="th-Center">{dataDemande[dN].cin}</td>
+                  <td id="th-Center">{dataDemande[dN].entite}</td>
                   <td id="th-Center">
                     {format(
                       new Date(dataDemande[dN].dateDemande),

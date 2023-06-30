@@ -33,6 +33,23 @@ namespace InternJusticeMicroS.Controllers
             return await _internJusticeContext.Demandes.ToListAsync();
         }
 
+
+        //select d.id, u.cin, u.Nom, u.Prenom, u.Entite, d.dateDemande, d.Statut
+        //from Demande d join Utilisateur u
+        //on d.Demandeur = u.id
+        [HttpGet("info")]
+        public async Task<ActionResult<IEnumerable<object>>> GetDemandesInfo()
+        {
+            if (_internJusticeContext.Demandes == null)
+            {
+                return NotFound();
+            }
+            var result = await _internJusticeContext.Demandes
+                    .Join(_internJusticeContext.Utilisateurs, d => d.Demandeur, u => u.id, (d, u) => new { d.id, u.CIN, u.Nom, u.Prenom, u.Entite, d.dateDemande, d.Statut })
+                    .ToListAsync();
+            return result.Select(x => new { x.id, x.CIN, x.Nom, x.Prenom, x.Entite, x.dateDemande, x.Statut }).ToList();
+        }
+
         [HttpGet("{demandeur:int}")]
         public async Task<ActionResult<IEnumerable<Demande>>> GetByIdDemande(int demandeur)
         {
