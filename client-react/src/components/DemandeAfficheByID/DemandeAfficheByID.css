@@ -1,0 +1,32 @@
+#btn-delete {
+  background-color: #ca1d1d;
+}
+
+.DemandeAfficheByID #popup-table tbody tr {
+  transition: all 0.5s;
+}
+
+.DemandeAfficheByID #popup-table thead th,
+.DemandeAfficheByID #popup-table tbody td {
+  border: 1px solid #818181;
+}
+
+.DemandeAfficheByID #popup-table th {
+  color: #185d99;
+  background-color: #d6d6d6;
+}
+.DemandeAfficheByID #popup-table td {
+  color: black;
+}
+
+.DemandeAfficheByID #popup-table tbody tr {
+  background-color: #f5f5f5;
+}
+
+.DemandeAfficheByID #popup-table tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.DemandeAfficheByID #popup-table tbody tr:hover {
+  background-color: #818181;
+}

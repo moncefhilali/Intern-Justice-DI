@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.titre {
+  text-align: center;
+  color: #185d99;
+  padding: 10px;
+}
+.Bon {
+  color: #185d99;
+}
+.tittre {
+  background-color: rgb(238, 238, 238);
+}

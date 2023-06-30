@@ -1,0 +1,82 @@
+.SignUp {
+  background-image: url("/public/JusticeBackground.jpg");
+  background-position: right top;
+  border: 2px solid #185d99;
+  display: flex;
+  height: 455px;
+  margin-left: 112px;
+  margin-right: 112px;
+  align-items: center;
+}
+
+.div-SignUp {
+  width: 460px;
+  height: fit-content;
+  background-color: #f9f9f9;
+  margin-left: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 3px black;
+  animation: 1s anim-lineUp ease-out 0s;
+}
+
+.form-SignUp {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-SignUp legend {
+  text-align: center;
+  color: #185d99;
+  font-weight: 600;
+}
+
+.form-SignUp table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-SignUp td {
+  padding: 7px;
+}
+
+.form-SignUp input {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.form-SignUp select {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.form-SignUp #btn-SignUp {
+  background-color: #185d99;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.form-SignUp #btn-SignUp:hover {
+  background-color: #5180a8;
+}
+
+@keyframes anim-lineUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-30%);
+  }
+  25% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  100% {
+    opacity: 1;
+  }
+}

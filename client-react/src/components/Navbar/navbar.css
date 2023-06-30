@@ -1,0 +1,77 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #185d99;
+  padding: 5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.navbar a {
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-right: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+.navbar a:hover {
+  color: #ffd04d;
+}
+.navbar .navbar-left {
+  display: flex;
+  align-items: center;
+  padding-left: 8rem;
+}
+.navbar .navbar-left a:first-child {
+  font-weight: bold;
+}
+.navbar .navbar-right {
+  display: flex;
+  align-items: center;
+  padding-right: 8rem;
+}
+
+.navbar label {
+  color: white;
+  font-size: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: all 0.5s;
+  font-weight: 600;
+}
+
+.navbar label:hover {
+  color: #ffd04d;
+  font-size: 16px;
+}
+
+.navbar .icon {
+  color: white;
+  font-size: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.navbar .icon:hover {
+  color: #ffd04d;
+  transform: scale(1.2);
+}
+.header {
+  color: #185d99;
+  text-align: left;
+  padding: 2rem;
+  padding-left: 7rem;
+  padding-right: 7rem;
+}
+.header h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid #185d99;
+  padding-bottom: 0.5rem;
+}
+
+.dropdown {
+  color: white;
+}

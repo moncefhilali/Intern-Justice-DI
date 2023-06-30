@@ -1,0 +1,28 @@
+.Header {
+  display: flex;
+  background-color: rgb(231, 231, 231);
+  height: 70px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Header h1 {
+  margin: 0;
+  color: #185d99;
+  font-weight: 700;
+  text-shadow: 2px 2px white;
+}
+
+.Header h5 {
+  margin: 0;
+  color: white;
+  font-weight: 700;
+  text-shadow: 2px 2px #185d99;
+}
+
+.Header h5 {
+  margin: 0;
+  color: white;
+  font-weight: 700;
+  text-shadow: 2px 2px #185d99;
+}

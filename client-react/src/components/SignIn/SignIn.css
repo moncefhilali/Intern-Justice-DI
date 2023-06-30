@@ -1,0 +1,81 @@
+.Auth-Navbar {
+  height: 40px;
+  background-color: #185d99;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 112px;
+}
+
+.Auth-Navbar .navbar-right {
+  color: white;
+  display: flex;
+  align-items: center;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.Auth-Navbar label {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.Auth-Navbar .navbar-right:hover {
+  color: #ffc107;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.div-popup-SignIn {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  background-color: white;
+  width: 500px;
+  height: 350px;
+}
+
+.div-popup-SignIn #tr-SignIn {
+  width: 300px;
+}
+
+.div-subpopup-SignIn {
+  background-color: #f1f1f1;
+  border: 1px solid #b3b3b3;
+}
+
+.div-subpopup-SignIn label {
+  color: #185d99;
+  font-weight: 700;
+  font-size: 14px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+
+.div-popup-SignIn #legend-SignIn {
+  margin-bottom: 25px;
+}
+
+.form-btn-Inscription {
+  display: flex;
+  margin-top: 25px;
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid rgb(196, 196, 196);
+  justify-content: center;
+  align-items: center;
+}
+
+.form-btn-Inscription #btn-Insription {
+  margin-left: 5px;
+  font-weight: 700;
+  color: #185d99;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.form-btn-Inscription #btn-Insription:hover {
+  font-size: 18px;
+  text-shadow: 1px 1px 10px #185d99;
+}
