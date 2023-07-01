@@ -6,14 +6,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthUser } from "react-auth-kit";
 import { MdDelete } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
+import { FaGears } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
+import { FaTruck } from "react-icons/fa6";
 
 const DemandeAfficheAll = () => {
   const auth = useAuthUser();
   const [dataDemande, setDataDemande] = useState([]);
   const [dataDemandeProduits, setDataDemandeProduits] = useState([]);
   const [visiblePopupShow, setvisiblePopupShow] = useState(false);
+  const [visiblePopupValider, setvisiblePopupValider] = useState(false);
+  const [visiblePopupTraiter, setvisiblePopupTraiter] = useState(false);
   const [visiblePopupDelete, setvisiblePopupDelete] = useState(false);
   const [dN, setdN] = useState();
 
@@ -122,8 +125,11 @@ const DemandeAfficheAll = () => {
                     >
                       <IoSearch />
                     </button>
-                    <button id="btn-modify" className="button-icons">
-                      <MdEdit />
+                    <button id="btn-valider" className="button-icons">
+                      <FaGears />
+                    </button>
+                    <button id="btn-traiter" className="button-icons">
+                      <FaTruck />
                     </button>
                     {opts.statut !== "En attente de validation"
                       ? false
