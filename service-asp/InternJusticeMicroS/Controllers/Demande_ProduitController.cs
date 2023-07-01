@@ -24,6 +24,23 @@ namespace InternJusticeMicroS.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update(Demande_Produit demandeProduit)
+        {
+            // Find the existing entity in the database
+            var existingEntity = await _internJusticeContext.Demande_Produits.FindAsync(demandeProduit.id);
+
+            if (existingEntity != null)
+            {
+                // Update the 'QteAccordee' property of the existing entity
+                existingEntity.QteAccordee = demandeProduit.QteAccordee;
+                await _internJusticeContext.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
+
         [HttpGet("{idDemande:int}")]
         public async Task<ActionResult<IEnumerable<Demande_Produit>>> GetByIdProduitsDemande(int idDemande)
         {

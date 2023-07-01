@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthUser } from "react-auth-kit";
 import { MdDelete } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 
 const DemandeAfficheByID = () => {
