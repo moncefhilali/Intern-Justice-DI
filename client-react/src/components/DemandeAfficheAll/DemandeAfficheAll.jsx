@@ -52,6 +52,22 @@ const DemandeAfficheAll = () => {
       });
   };
 
+  const ShowPopUpValider = (n) => {
+    setdN(n);
+    setvisiblePopupValider(true);
+    axios
+      .get(
+        `https://localhost:7165/api/Demande_Produit/Produits/${dataDemande[n].id}`
+      )
+      .then((result) => {
+        setDataDemandeProduits(result.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast("Error Produits Demande");
+      });
+  };
+
   const ShowPopUpDelete = (n) => {
     setdN(n);
     setvisiblePopupDelete(true);
@@ -59,6 +75,8 @@ const DemandeAfficheAll = () => {
 
   const HidePopUp = () => {
     setvisiblePopupShow(false);
+    setvisiblePopupValider(false);
+    setvisiblePopupTraiter(false);
     setvisiblePopupDelete(false);
   };
 
@@ -125,7 +143,11 @@ const DemandeAfficheAll = () => {
                     >
                       <IoSearch />
                     </button>
-                    <button id="btn-valider" className="button-icons">
+                    <button
+                      id="btn-valider"
+                      className="button-icons"
+                      onClick={() => ShowPopUpValider(i)}
+                    >
                       <FaGears />
                     </button>
                     <button id="btn-traiter" className="button-icons">
@@ -184,6 +206,48 @@ const DemandeAfficheAll = () => {
                   <button id="popup-cancel" onClick={ButtonAnnuler}>
                     Fermer
                   </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      )}
+      {visiblePopupValider && (
+        <div className="div-popup-back">
+          <div className="div-popup">
+            <h3>Validation</h3>
+            <br />
+            <h4>Veuillez entrer la quantité accordée des articles</h4>
+            <table id="popup-table">
+              <thead>
+                <th id="th-Center">#</th>
+                <th id="th-Center">Produit</th>
+                <th id="th-Center">Quantité Demandée</th>
+                <th>Quantité Accordée</th>
+              </thead>
+              <tbody>
+                {dataDemandeProduits.map((opts, i) => (
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>{opts.designation}</td>
+                    <td>{opts.qteDemandee}</td>
+                    <td>
+                      <input type="number" min="0" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <br />
+            <table id="popup-table">
+              <tr>
+                <td>
+                  <button id="popup-cancel" onClick={ButtonAnnuler}>
+                    Annuler
+                  </button>
+                </td>
+                <td>
+                  <button id="popup-done">Valider</button>
                 </td>
               </tr>
             </table>
