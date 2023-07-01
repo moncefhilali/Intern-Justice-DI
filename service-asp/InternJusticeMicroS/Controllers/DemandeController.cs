@@ -74,6 +74,35 @@ namespace InternJusticeMicroS.Controllers
             return await _internJusticeContext.Demandes.Where(w => w.Demandeur == demandeur).ToListAsync();
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update(Demande demande, int UpdatedBy)
+        {
+            // Find the existing entity in the database
+            var existingEntity = await _internJusticeContext.Demandes.FindAsync(demande.id);
+
+            if (existingEntity != null)
+            {
+                // Update the 'Statut' property of the existing entity
+                existingEntity.Statut = demande.Statut;
+                await _internJusticeContext.SaveChangesAsync();
+            }
+
+            // Create a new Historique_Demande object and set its properties
+            Historique_Demande Historique = new Historique_Demande
+            {
+                idDemande = demande.id,
+                idUtilisateur = UpdatedBy,
+                Statut = demande.Statut,
+                dateCreation = DateTime.Today
+            };
+
+            // Add the Historique_Demande object to the context and save changes
+            _internJusticeContext.Historique_Demandes.Add(Historique);
+            await _internJusticeContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteDemande(int id)
         {

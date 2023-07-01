@@ -5,7 +5,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthUser } from "react-auth-kit";
-import { MdDelete } from "react-icons/md";
 import { FaGears } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { FaTruck } from "react-icons/fa6";
@@ -17,7 +16,6 @@ const DemandeAfficheAll = () => {
   const [visiblePopupShow, setvisiblePopupShow] = useState(false);
   const [visiblePopupValider, setvisiblePopupValider] = useState(false);
   const [visiblePopupTraiter, setvisiblePopupTraiter] = useState(false);
-  const [visiblePopupDelete, setvisiblePopupDelete] = useState(false);
   const [dN, setdN] = useState();
 
   useEffect(() => {
@@ -68,36 +66,54 @@ const DemandeAfficheAll = () => {
       });
   };
 
-  const ShowPopUpDelete = (n) => {
-    setdN(n);
-    setvisiblePopupDelete(true);
-  };
-
   const HidePopUp = () => {
     setvisiblePopupShow(false);
     setvisiblePopupValider(false);
     setvisiblePopupTraiter(false);
-    setvisiblePopupDelete(false);
   };
 
   const ButtonAnnuler = () => {
     HidePopUp();
   };
 
-  const ButtonSupprimer = () => {
-    axios
-      .delete(`https://localhost:7165/api/Demande/${dataDemande[dN].id}`)
-      .then(() => {
-        toast("✔️ La demande a bien été supprimée!");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast("❌La demande n'a pas été supprimée!");
+  const ButtonValider = () => {
+    var checkValues = true;
+    for (let i = 0; i < dataDemandeProduits.length; i++) {
+      if (document.getElementById(`qteAcc${i}`).value === "") {
+        checkValues = false;
+      }
+    }
+    if (checkValues) {
+      var dP = [...dataDemandeProduits];
+      dataDemandeProduits.forEach((opts, i) => {
+        var qa = document.getElementById(`qteAcc${i}`).value;
+        dP[i].qteAccordee = parseInt(qa);
+        axios
+          .put("https://localhost:7165/api/Demande_Produit", dP[i])
+          .catch((error) => {
+            console.log(error);
+            toast("❌La demande n'a pas été validée!");
+          });
       });
-    var dL = [...dataDemande];
-    dL.splice(dN, 1);
-    setDataDemande(dL);
-    HidePopUp();
+      setDataDemandeProduits(dP);
+      var d = dataDemande[dN];
+      d.statut = "Validé";
+      axios
+        .put(`https://localhost:7165/api/Demande?UpdatedBy=${auth().id}`, d)
+        .then(() => {
+          var ds = [...dataDemande];
+          ds[dN] = d;
+          setDataDemande(ds);
+          toast("✔️ La demande a bien été validée!");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast("❌La demande n'a pas été validée!");
+        });
+      HidePopUp();
+    } else {
+      toast("❌ Veuillez entrer toutes les quantités accordées!");
+    }
   };
 
   return (
@@ -153,17 +169,6 @@ const DemandeAfficheAll = () => {
                     <button id="btn-traiter" className="button-icons">
                       <FaTruck />
                     </button>
-                    {opts.statut !== "En attente de validation"
-                      ? false
-                      : true && (
-                          <button
-                            id="btn-delete"
-                            className="button-icons"
-                            onClick={() => ShowPopUpDelete(i)}
-                          >
-                            <MdDelete />
-                          </button>
-                        )}
                   </div>
                 </td>
               </tr>
@@ -232,7 +237,7 @@ const DemandeAfficheAll = () => {
                     <td>{opts.designation}</td>
                     <td>{opts.qteDemandee}</td>
                     <td>
-                      <input type="number" min="0" />
+                      <input type="number" id={`qteAcc${i}`} min="0" required />
                     </td>
                   </tr>
                 ))}
@@ -247,57 +252,8 @@ const DemandeAfficheAll = () => {
                   </button>
                 </td>
                 <td>
-                  <button id="popup-done">Valider</button>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      )}
-      {visiblePopupDelete && (
-        <div className="div-popup-back">
-          <div className="div-popup">
-            <h3>Confirmation</h3>
-            <br />
-            <h4>Voulez-vous vraiment supprimer cette demande ?</h4>
-            <table id="popup-table">
-              <thead>
-                <th id="th-Center">#</th>
-                <th id="th-Center">Nom</th>
-                <th id="th-Center">Prénom</th>
-                <th id="th-Center">CIN</th>
-                <th id="th-Center">Entité</th>
-                <th id="th-Center">Date de demande</th>
-                <th id="th-Center">Statut</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td id="th-Center">{dN + 1}</td>
-                  <td id="th-Center">{dataDemande[dN].nom}</td>
-                  <td id="th-Center">{dataDemande[dN].prenom}</td>
-                  <td id="th-Center">{dataDemande[dN].cin}</td>
-                  <td id="th-Center">{dataDemande[dN].entite}</td>
-                  <td id="th-Center">
-                    {format(
-                      new Date(dataDemande[dN].dateDemande),
-                      "dd/MM/yyyy"
-                    )}
-                  </td>
-                  <td id="th-Center">{dataDemande[dN].statut}</td>
-                </tr>
-              </tbody>
-            </table>
-            <br />
-            <table id="popup-table">
-              <tr>
-                <td>
-                  <button id="popup-cancel" onClick={ButtonAnnuler}>
-                    Annuler
-                  </button>
-                </td>
-                <td>
-                  <button id="popup-done" onClick={ButtonSupprimer}>
-                    Supprimer
+                  <button id="popup-done" onClick={ButtonValider}>
+                    Valider
                   </button>
                 </td>
               </tr>
