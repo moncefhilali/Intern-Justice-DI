@@ -5,6 +5,7 @@ namespace InternJusticeMicroS.Models
     [Table("Demande", Schema = "dbo")]
     public class Demande : Entity
     {
+
         [Column("Demandeur")]
         public int Demandeur { get; set; }
 

@@ -35,5 +35,6 @@ namespace InternJusticeMicroS.Models
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<MarchePublic> MarchePublics { get; set; }
         public DbSet<BonComande> BonComandes { get; set; }
+        public DbSet<Historique_Demande> Historique_Demandes { get; set; }
     }
 }

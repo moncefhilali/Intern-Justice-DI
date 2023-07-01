@@ -20,6 +20,20 @@ namespace InternJusticeMicroS.Controllers
         {
             await _internJusticeContext.Demandes.AddAsync(Demande);
             await _internJusticeContext.SaveChangesAsync();
+
+            // Create a new Historique_Demande object and set its properties
+            Historique_Demande Historique = new Historique_Demande
+            {
+                idDemande = Demande.id,
+                idUtilisateur = Demande.Demandeur,
+                Statut = "Créé",
+                dateCreation = DateTime.Today
+            };
+
+            // Add the Historique_Demande object to the context and save changes
+            _internJusticeContext.Historique_Demandes.Add(Historique);
+            await _internJusticeContext.SaveChangesAsync();
+
             return Ok(Demande.id);
         }
 
