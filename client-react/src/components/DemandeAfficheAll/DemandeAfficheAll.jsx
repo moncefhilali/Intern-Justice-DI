@@ -159,16 +159,24 @@ const DemandeAfficheAll = () => {
                     >
                       <IoSearch />
                     </button>
-                    <button
-                      id="btn-valider"
-                      className="button-icons"
-                      onClick={() => ShowPopUpValider(i)}
-                    >
-                      <FaGears />
-                    </button>
-                    <button id="btn-traiter" className="button-icons">
-                      <FaTruck />
-                    </button>
+                    {opts.statut !== "En attente de validation"
+                      ? false
+                      : true && (
+                          <button
+                            id="btn-valider"
+                            className="button-icons"
+                            onClick={() => ShowPopUpValider(i)}
+                          >
+                            <FaGears />
+                          </button>
+                        )}
+                    {opts.statut !== "Validé"
+                      ? false
+                      : true && (
+                          <button id="btn-traiter" className="button-icons">
+                            <FaTruck />
+                          </button>
+                        )}
                   </div>
                 </td>
               </tr>
