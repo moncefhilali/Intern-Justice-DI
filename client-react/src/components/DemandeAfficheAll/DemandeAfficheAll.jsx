@@ -321,9 +321,23 @@ const DemandeAfficheAll = () => {
             <table id="popup-table">
               <tr>
                 <td>
+                  <h4>Veuillez choisir la date de sortie :</h4>
+                </td>
+                <td>
+                  <input type="date" />
+                </td>
+              </tr>
+            </table>
+            <br />
+            <table id="popup-table">
+              <tr>
+                <td>
                   <button id="popup-cancel" onClick={ButtonAnnuler}>
                     Annuler
                   </button>
+                </td>
+                <td>
+                  <button id="popup-done">Valider</button>
                 </td>
               </tr>
             </table>
