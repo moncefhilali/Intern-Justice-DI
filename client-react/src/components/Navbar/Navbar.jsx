@@ -41,6 +41,9 @@ const Navbar = () => {
               <NavDropdown.Item href="/Demande/Affichage">
                 TOUS LES DEMANDES DE SORTIE
               </NavDropdown.Item>
+              <NavDropdown.Item href="#">
+                TOUS LES BONS DE SORTIE
+              </NavDropdown.Item>
             </NavDropdown>
             {/* End of nested dropdown */}
 
