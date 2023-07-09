@@ -15,7 +15,7 @@ const DemandeAfficheAll = () => {
   const [dataDemandeProduits, setDataDemandeProduits] = useState([]);
   const [visiblePopupShow, setvisiblePopupShow] = useState(false);
   const [visiblePopupValider, setvisiblePopupValider] = useState(false);
-  const [visiblePopupTraiter, setvisiblePopupTraiter] = useState(false);
+  const [visiblePopupLivrer, setvisiblePopupLivrer] = useState(false);
   const [dN, setdN] = useState();
 
   useEffect(() => {
@@ -66,10 +66,26 @@ const DemandeAfficheAll = () => {
       });
   };
 
+  const ShowPopUpLivrer = (n) => {
+    setdN(n);
+    setvisiblePopupLivrer(true);
+    axios
+      .get(
+        `https://localhost:7165/api/Demande_Produit/Produits/${dataDemande[n].id}`
+      )
+      .then((result) => {
+        setDataDemandeProduits(result.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast("Error Produits Demande");
+      });
+  };
+
   const HidePopUp = () => {
     setvisiblePopupShow(false);
     setvisiblePopupValider(false);
-    setvisiblePopupTraiter(false);
+    setvisiblePopupLivrer(false);
   };
 
   const ButtonAnnuler = () => {
@@ -173,7 +189,11 @@ const DemandeAfficheAll = () => {
                     {opts.statut !== "Validé"
                       ? false
                       : true && (
-                          <button id="btn-traiter" className="button-icons">
+                          <button
+                            id="btn-livrer"
+                            className="button-icons"
+                            onClick={() => ShowPopUpLivrer(i)}
+                          >
                             <FaTruck />
                           </button>
                         )}
@@ -262,6 +282,47 @@ const DemandeAfficheAll = () => {
                 <td>
                   <button id="popup-done" onClick={ButtonValider}>
                     Valider
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      )}
+      {visiblePopupLivrer && (
+        <div className="div-popup-back">
+          <div className="div-popup">
+            <h3>Livraison</h3>
+            <br />
+            <h4>Les Articles de La Demande</h4>
+            <table id="popup-table">
+              <thead>
+                <th id="th-Center">#</th>
+                <th id="th-Center">Produit</th>
+                <th id="th-Center">Quantité Demandée</th>
+                {dataDemande[dN].statut === "En attente de validation"
+                  ? false
+                  : true && <th>Quantité Accordée</th>}
+              </thead>
+              <tbody>
+                {dataDemandeProduits.map((opts, i) => (
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>{opts.designation}</td>
+                    <td>{opts.qteDemandee}</td>
+                    {dataDemande[dN].statut === "En attente de validation"
+                      ? false
+                      : true && <td>{opts.qteAccordee}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <br />
+            <table id="popup-table">
+              <tr>
+                <td>
+                  <button id="popup-cancel" onClick={ButtonAnnuler}>
+                    Annuler
                   </button>
                 </td>
               </tr>
