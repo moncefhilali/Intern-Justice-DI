@@ -132,6 +132,49 @@ const DemandeAfficheAll = () => {
     }
   };
 
+  const ButtonLivrer = () => {
+    var dS = document.getElementById("dateSortie").value;
+    if (dS === "") {
+      document.getElementById("dateSortie").style.borderWidth = "3px";
+      document.getElementById("dateSortie").style.borderColor = "red";
+      toast("❌ Veuillez entrer la date de sortie svp!");
+    } else {
+      // current date
+      const current = new Date();
+      var Cdate = `${current.getFullYear()}-${
+        current.getMonth() + 1
+      }-${current.getDate()}`;
+      Cdate = format(new Date(Cdate), "yyyy-MM-dd");
+      // posted object
+      var bS = {
+        idDocument: null,
+        idDemande: dataDemande[dN].id,
+        idCreePar: auth().id,
+        dateSortie: dS,
+        dateCreation: Cdate,
+      };
+      axios
+        .post("https://localhost:7165/api/BonSortie", bS)
+        .then(() => {
+          toast("✔️ La demande a été livrée !");
+          var d = dataDemande[dN];
+          d.statut = "Livré";
+          axios
+            .put(`https://localhost:7165/api/Demande?UpdatedBy=${auth().id}`, d)
+            .then(() => {
+              var ds = [...dataDemande];
+              ds[dN] = d;
+              setDataDemande(ds);
+              HidePopUp();
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          toast("❌La demande n'a pas été livrée!");
+        });
+    }
+  };
+
   return (
     <div className="DemandeAfficheAll">
       <div className="header">
@@ -324,7 +367,7 @@ const DemandeAfficheAll = () => {
                   <h4>Veuillez choisir la date de sortie :</h4>
                 </td>
                 <td>
-                  <input type="date" />
+                  <input type="date" id="dateSortie" />
                 </td>
               </tr>
             </table>
@@ -337,7 +380,9 @@ const DemandeAfficheAll = () => {
                   </button>
                 </td>
                 <td>
-                  <button id="popup-done">Valider</button>
+                  <button id="popup-done" onClick={ButtonLivrer}>
+                    Livrer
+                  </button>
                 </td>
               </tr>
             </table>

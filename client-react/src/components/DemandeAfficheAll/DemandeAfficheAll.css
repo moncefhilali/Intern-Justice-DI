@@ -6,6 +6,10 @@
   background-color: #fca130;
 }
 
+#dateSortie {
+  transition: all 0.5s;
+}
+
 .DemandeAfficheAll #popup-table tbody tr {
   transition: all 0.5s;
 }
