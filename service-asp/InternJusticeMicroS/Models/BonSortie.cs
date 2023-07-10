@@ -2,7 +2,7 @@
 
 namespace InternJusticeMicroS.Models
 {
-    [Table("BonEntree", Schema = "dbo")]
+    [Table("BonSortie", Schema = "dbo")]
     public class BonSortie : Entity
     {
         [Column("idDocument")]
