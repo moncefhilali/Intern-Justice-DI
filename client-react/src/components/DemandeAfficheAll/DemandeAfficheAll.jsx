@@ -15,7 +15,7 @@ const DemandeAfficheAll = () => {
   const [dataDemandeProduits, setDataDemandeProduits] = useState([]);
   const [visiblePopupShow, setvisiblePopupShow] = useState(false);
   const [visiblePopupValider, setvisiblePopupValider] = useState(false);
-  const [visiblePopupTraiter, setvisiblePopupTraiter] = useState(false);
+  const [visiblePopupLivrer, setvisiblePopupLivrer] = useState(false);
   const [dN, setdN] = useState();
 
   useEffect(() => {
@@ -66,10 +66,26 @@ const DemandeAfficheAll = () => {
       });
   };
 
+  const ShowPopUpLivrer = (n) => {
+    setdN(n);
+    setvisiblePopupLivrer(true);
+    axios
+      .get(
+        `https://localhost:7165/api/Demande_Produit/Produits/${dataDemande[n].id}`
+      )
+      .then((result) => {
+        setDataDemandeProduits(result.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast("Error Produits Demande");
+      });
+  };
+
   const HidePopUp = () => {
     setvisiblePopupShow(false);
     setvisiblePopupValider(false);
-    setvisiblePopupTraiter(false);
+    setvisiblePopupLivrer(false);
   };
 
   const ButtonAnnuler = () => {
@@ -113,6 +129,49 @@ const DemandeAfficheAll = () => {
       HidePopUp();
     } else {
       toast("❌ Veuillez entrer toutes les quantités accordées!");
+    }
+  };
+
+  const ButtonLivrer = () => {
+    var dS = document.getElementById("dateSortie").value;
+    if (dS === "") {
+      document.getElementById("dateSortie").style.borderWidth = "3px";
+      document.getElementById("dateSortie").style.borderColor = "red";
+      toast("❌ Veuillez entrer la date de sortie svp!");
+    } else {
+      // current date
+      const current = new Date();
+      var Cdate = `${current.getFullYear()}-${
+        current.getMonth() + 1
+      }-${current.getDate()}`;
+      Cdate = format(new Date(Cdate), "yyyy-MM-dd");
+      // posted object
+      var bS = {
+        idDocument: null,
+        idDemande: dataDemande[dN].id,
+        idCreePar: auth().id,
+        dateSortie: dS,
+        dateCreation: Cdate,
+      };
+      axios
+        .post("https://localhost:7165/api/BonSortie", bS)
+        .then(() => {
+          toast("✔️ La demande a été livrée !");
+          var d = dataDemande[dN];
+          d.statut = "Livré";
+          axios
+            .put(`https://localhost:7165/api/Demande?UpdatedBy=${auth().id}`, d)
+            .then(() => {
+              var ds = [...dataDemande];
+              ds[dN] = d;
+              setDataDemande(ds);
+              HidePopUp();
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          toast("❌La demande n'a pas été livrée!");
+        });
     }
   };
 
@@ -173,7 +232,11 @@ const DemandeAfficheAll = () => {
                     {opts.statut !== "Validé"
                       ? false
                       : true && (
-                          <button id="btn-traiter" className="button-icons">
+                          <button
+                            id="btn-livrer"
+                            className="button-icons"
+                            onClick={() => ShowPopUpLivrer(i)}
+                          >
                             <FaTruck />
                           </button>
                         )}
@@ -262,6 +325,63 @@ const DemandeAfficheAll = () => {
                 <td>
                   <button id="popup-done" onClick={ButtonValider}>
                     Valider
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      )}
+      {visiblePopupLivrer && (
+        <div className="div-popup-back">
+          <div className="div-popup">
+            <h3>Livraison</h3>
+            <br />
+            <h4>Les Articles de La Demande</h4>
+            <table id="popup-table">
+              <thead>
+                <th id="th-Center">#</th>
+                <th id="th-Center">Produit</th>
+                <th id="th-Center">Quantité Demandée</th>
+                {dataDemande[dN].statut === "En attente de validation"
+                  ? false
+                  : true && <th>Quantité Accordée</th>}
+              </thead>
+              <tbody>
+                {dataDemandeProduits.map((opts, i) => (
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>{opts.designation}</td>
+                    <td>{opts.qteDemandee}</td>
+                    {dataDemande[dN].statut === "En attente de validation"
+                      ? false
+                      : true && <td>{opts.qteAccordee}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <br />
+            <table id="popup-table">
+              <tr>
+                <td>
+                  <h4>Veuillez choisir la date de sortie :</h4>
+                </td>
+                <td>
+                  <input type="date" id="dateSortie" />
+                </td>
+              </tr>
+            </table>
+            <br />
+            <table id="popup-table">
+              <tr>
+                <td>
+                  <button id="popup-cancel" onClick={ButtonAnnuler}>
+                    Annuler
+                  </button>
+                </td>
+                <td>
+                  <button id="popup-done" onClick={ButtonLivrer}>
+                    Livrer
                   </button>
                 </td>
               </tr>

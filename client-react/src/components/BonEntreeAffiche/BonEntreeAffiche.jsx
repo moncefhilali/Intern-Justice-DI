@@ -167,10 +167,15 @@ const BonEntreeAffiche = () => {
       {visiblePopup && (
         <div className="div-popup-back">
           <div className="div-popup">
-            <h3>Insertion de Bon d'entree</h3>
+            <h3>Validation</h3>
+            <br />
+            <h4>Insertion de Bon d'Entree</h4>
             <table id="popup-table">
               <tr>
-                <td colSpan="2">
+                <td>
+                  <h4>➀</h4>
+                </td>
+                <td>
                   <button id="popup-print" onClick={handlePrint}>
                     <BsDownload />
                     Telecharger le bon d'entree
@@ -178,10 +183,16 @@ const BonEntreeAffiche = () => {
                 </td>
               </tr>
               <tr>
-                <td colSpan="2">
+                <td>
+                  <h4>➁</h4>
+                </td>
+                <td>
                   <input id="popup-file" type="file" onChange={HCfile} />
                 </td>
               </tr>
+            </table>
+            <br />
+            <table id="popup-table">
               <tr>
                 <td>
                   <button id="popup-cancel" onClick={ButtonAnnulerDocument}>
