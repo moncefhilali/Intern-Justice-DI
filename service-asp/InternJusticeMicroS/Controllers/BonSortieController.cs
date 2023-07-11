@@ -1,6 +1,7 @@
 ﻿using InternJusticeMicroS.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternJusticeMicroS.Controllers
 {
@@ -22,6 +23,15 @@ namespace InternJusticeMicroS.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BonSortie>>> GetBonsSortie()
+        {
+            if (_internJusticeContext.BonSorties == null)
+            {
+                return NotFound();
+            }
+            return await _internJusticeContext.BonSorties.ToListAsync();
+        }
 
     }
 }
