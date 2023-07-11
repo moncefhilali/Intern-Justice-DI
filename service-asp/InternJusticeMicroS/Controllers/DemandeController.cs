@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace InternJusticeMicroS.Controllers
 {
     [Route("api/[controller]")]
@@ -62,6 +64,25 @@ namespace InternJusticeMicroS.Controllers
                     .Join(_internJusticeContext.Utilisateurs, d => d.Demandeur, u => u.id, (d, u) => new { d.id, u.CIN, u.Nom, u.Prenom, u.Entite, d.dateDemande, d.Statut })
                     .ToListAsync();
             return result.Select(x => new { x.id, x.CIN, x.Nom, x.Prenom, x.Entite, x.dateDemande, x.Statut }).ToList();
+        }
+
+        [HttpGet("info/{id:int}")]
+        public async Task<ActionResult<object>> GetByIdDemandeInfo(int id)
+        {
+            if (_internJusticeContext.Demandes == null)
+            {
+                return NotFound();
+            }
+            var checkD = await _internJusticeContext.Demandes.FindAsync(id);
+            if (checkD == null)
+            {
+                return NotFound();
+            }
+            var result = await _internJusticeContext.Demandes
+                    .Join(_internJusticeContext.Utilisateurs, d => d.Demandeur, u => u.id, (d, u) => new { d.id, u.CIN, u.Nom, u.Prenom, u.Entite, d.dateDemande, d.Statut })
+                    .Where(w => w.id == id).FirstAsync();
+                    
+            return result;
         }
 
         [HttpGet("{demandeur:int}")]
