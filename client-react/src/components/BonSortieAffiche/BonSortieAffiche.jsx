@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./BonSortieAffiche.css";
+import { useReactToPrint } from "react-to-print";
 import axios from "axios";
+import { useAuthUser } from "react-auth-kit";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrintBonSortie from "../PrintBonSortie/PrintBonSortie";
 import { PiArrowBendDownRightDuotone } from "react-icons/pi";
 import { IoSearch } from "react-icons/io5";
 import { HiDocumentArrowUp } from "react-icons/hi2";
@@ -18,8 +21,11 @@ const BonSortieAffiche = () => {
   const [visiblePopupShow, setvisiblePopupShow] = useState(false);
   const [visiblePopupPrint, setvisiblePopupPrint] = useState(false);
   const [visiblePrint, setvisiblePrint] = useState(false);
+  const [File, setFile] = useState();
   const [dataDateDemande, setDataDateDemande] = useState("2000-02-02");
   const [dN, setdN] = useState();
+  const componentRef = useRef();
+  const auth = useAuthUser();
   var days = [
     "Dimanche",
     "Lundi",
@@ -33,6 +39,10 @@ const BonSortieAffiche = () => {
   useEffect(() => {
     getBonsSortie();
   }, []);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const getBonsSortie = () => {
     axios
@@ -88,6 +98,76 @@ const BonSortieAffiche = () => {
     setdN(n);
     setvisiblePopupPrint(true);
     setvisiblePrint(true);
+  };
+
+  const HidePopUp = () => {
+    setvisiblePopupPrint(false);
+    setvisiblePrint(false);
+  };
+
+  function HCfile(event) {
+    setFile(event.target.files[0]);
+  }
+
+  const ButtonAnnulerDocument = () => {
+    HidePopUp();
+  };
+
+  const ButtonEnregisterDocument = async () => {
+    var ckF = document.getElementById("popup-file");
+    if (ckF.files[0] === undefined) {
+      toast("❌ Veuillez choisir le fichier");
+    } else {
+      var FileExtension = File.name.split(".").pop();
+      var newFileName = `${dataBonsSortie[dN].dateCreation.slice(0, 10)}_BS_${
+        dataBonsSortie[dN].id
+      }_DD_${dataBonsSortie[dN].idDemande}.${FileExtension}`;
+      var formData = new FormData();
+      formData.append("file", ckF.files[0], newFileName);
+      await axios
+        .post("https://localhost:7165/api/Document/file/upload", formData)
+        .then(() => {
+          toast("🔄 Le fichier a été chargé!");
+          const current = new Date();
+          var Cdate = `${current.getFullYear()}-${
+            current.getMonth() + 1
+          }-${current.getDate()}`;
+          Cdate = format(new Date(Cdate), "yyyy-MM-dd");
+          axios
+            .post("https://localhost:7165/api/Document", {
+              idCreePar: auth().id,
+              idModifierPar: null,
+              Chemin: newFileName,
+              dateCreation: Cdate,
+              dateModification: null,
+            })
+            .then((result) => {
+              var newBS = dataBonsSortie[dN];
+              newBS.idDocument = result.data;
+              axios
+                .put("https://localhost:7165/api/BonSortie", newBS)
+                .then(() => {
+                  toast("✔️ Document a été bien inséré !");
+                  var updatedBSs = [...dataBonsSortie];
+                  updatedBSs[dN] = newBS;
+                  setDataBonsSortie(updatedBSs);
+                  HidePopUp();
+                })
+                .catch((error) => {
+                  toast("❌ Document pas inserer!");
+                  console.log(error);
+                });
+            })
+            .catch((error) => {
+              toast("❌ Document pas inserer!");
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          toast("❌ Erreur lors du chargement du fichier !");
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -171,7 +251,7 @@ const BonSortieAffiche = () => {
                 </td>
                 <td id="th-Center" colSpan="2">
                   <div className="div-btn-telecharger">
-                    {opts.idDocument === "null"
+                    {opts.idDocument !== null
                       ? false
                       : true && (
                           <button
@@ -262,6 +342,56 @@ const BonSortieAffiche = () => {
               </tr>
             </table>
           </div>
+        </div>
+      )}
+      {visiblePopupPrint && (
+        <div className="div-popup-back">
+          <div className="div-popup">
+            <h3>Documentation</h3>
+            <br />
+            <h4>Insertion de Bon de Sortie</h4>
+            <table id="popup-table">
+              <tr>
+                <td>
+                  <h4>➀</h4>
+                </td>
+                <td>
+                  <button id="popup-print" onClick={handlePrint}>
+                    <BsDownload />
+                    Telecharger le bon de sortie
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h4>➁</h4>
+                </td>
+                <td>
+                  <input id="popup-file" type="file" onChange={HCfile} />
+                </td>
+              </tr>
+            </table>
+            <br />
+            <table id="popup-table">
+              <tr>
+                <td>
+                  <button id="popup-cancel" onClick={ButtonAnnulerDocument}>
+                    Annuler
+                  </button>
+                </td>
+                <td>
+                  <button id="popup-done" onClick={ButtonEnregisterDocument}>
+                    Valider
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      )}
+      {visiblePrint && (
+        <div ref={componentRef}>
+          <PrintBonSortie dataBS={dataBonsSortie[dN]} />
         </div>
       )}
       <ToastContainer />
