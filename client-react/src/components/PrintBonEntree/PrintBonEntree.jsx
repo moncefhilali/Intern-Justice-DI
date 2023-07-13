@@ -71,7 +71,8 @@ const PrintBonEntree = (props) => {
           </td>
         </tr>
       </table>
-      <h5>Bon de livraison:</h5>
+      <br />
+      <h5>Bon de livraison :</h5>
       <table className="table-print-BLF">
         <tr>
           <td>Numéro de bon de livrison</td>
@@ -89,7 +90,8 @@ const PrintBonEntree = (props) => {
           <td>{dataBLF.fournisseur}</td>
         </tr>
       </table>
-      <h5>Produits Reçus:</h5>
+      <br />
+      <h5>Produits Reçus :</h5>
       <table className="table-print-PL">
         <thead>
           <tr>
