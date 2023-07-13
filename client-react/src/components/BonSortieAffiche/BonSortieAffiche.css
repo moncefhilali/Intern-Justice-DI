@@ -1,0 +1,35 @@
+#blank-th {
+  background-color: white;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+.BonSortieAffiche #popup-table tbody tr {
+  transition: all 0.5s;
+}
+
+.BonSortieAffiche #popup-table thead th,
+.BonSortieAffiche #popup-table tbody td {
+  border: 1px solid #818181;
+}
+
+.BonSortieAffiche #popup-table th {
+  color: #185d99;
+  background-color: #d6d6d6;
+}
+.BonSortieAffiche #popup-table td {
+  color: black;
+}
+
+.BonSortieAffiche #popup-table tbody tr {
+  background-color: #f5f5f5;
+}
+
+.BonSortieAffiche #popup-table tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.BonSortieAffiche #popup-table tbody tr:hover {
+  background-color: #818181;
+}

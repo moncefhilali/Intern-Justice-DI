@@ -1,6 +1,7 @@
 ﻿using InternJusticeMicroS.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternJusticeMicroS.Controllers
 {
@@ -22,6 +23,29 @@ namespace InternJusticeMicroS.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BonSortie>>> GetBonsSortie()
+        {
+            if (_internJusticeContext.BonSorties == null)
+            {
+                return NotFound();
+            }
+            return await _internJusticeContext.BonSorties.ToListAsync();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(BonSortie bonSortie)
+        {
+            var bs = await _internJusticeContext.BonSorties.FindAsync(bonSortie.id);
+            if (bs != null)
+            {
+                bs.idDocument = bonSortie.idDocument;
+                await _internJusticeContext.SaveChangesAsync();
+                return Ok();
+            }
+            return NotFound();
+
+        }
 
     }
 }

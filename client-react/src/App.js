@@ -6,6 +6,7 @@ import Authentification from "./pages/Authentification";
 import AjouteBonEntree from "./pages/AjouteBonEntree";
 import MesDemandes from "./pages/MesDemandes";
 import AfficheDemande from "./pages/AfficheDemande";
+import AfficheBonSortie from "./pages/AfficheBonSortie";
 import AfficheUtilisateur from "./pages/AfficheUtilisateur";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/Demande/Ajoute" element={<AjouteDemande />} />
           <Route path="/Demande/MesDemandes" element={<MesDemandes />} />
           <Route path="/Demande/Affichage" element={<AfficheDemande />} />
+          <Route path="/Bonsortie/Affichage" element={<AfficheBonSortie />} />
           <Route path="/Utilisateurs" element={<AfficheUtilisateur />} />
         </Routes>
       </BrowserRouter>
