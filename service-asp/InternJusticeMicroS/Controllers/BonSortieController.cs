@@ -33,5 +33,19 @@ namespace InternJusticeMicroS.Controllers
             return await _internJusticeContext.BonSorties.ToListAsync();
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update(BonSortie bonSortie,int idDocument)
+        {
+            var bs = await _internJusticeContext.BonSorties.FindAsync(bonSortie.id);
+            if (bs != null)
+            {
+                bs.idDocument = idDocument;
+                await _internJusticeContext.SaveChangesAsync();
+                return Ok();
+            }
+            return NotFound();
+
+        }
+
     }
 }
