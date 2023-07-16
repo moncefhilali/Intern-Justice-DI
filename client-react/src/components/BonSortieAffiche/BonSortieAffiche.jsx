@@ -18,7 +18,6 @@ const BonSortieAffiche = () => {
   const [dataBonsSortie, setDataBonsSortie] = useState([]);
   const [dataDemande, setDataDemande] = useState([]);
   const [dataDemandeProduits, setDataDemandeProduits] = useState([]);
-  const [visibleDemande, setvisibleDemande] = useState(false);
   const [visiblePopupShow, setvisiblePopupShow] = useState(false);
   const [visiblePopupPrint, setvisiblePopupPrint] = useState(false);
   const [visiblePrint, setvisiblePrint] = useState(false);
@@ -58,12 +57,18 @@ const BonSortieAffiche = () => {
   };
 
   const getByIdDemande = (n) => {
-    if (visibleDemande === true) {
-      setvisibleDemande(false);
+    var bs = [...dataBonsSortie];
+    var bsN = dataBonsSortie[n];
+    if (bsN.visible === true) {
+      bsN.visible = false;
+      bs[n] = bsN;
+      setDataBonsSortie(bs);
     } else {
-      var nD = dataBonsSortie[n].idDemande;
+      bs.forEach((opts, i) => {
+        opts.visible = false;
+      });
       axios
-        .get(`https://localhost:7165/api/Demande/info/${nD}`)
+        .get(`https://localhost:7165/api/Demande/info/${bsN.idDemande}`)
         .then((result) => {
           setDataDemande(result.data);
           setDataDateDemande(result.data.dateDemande);
@@ -72,8 +77,27 @@ const BonSortieAffiche = () => {
           toast("Error Demande");
           console.log(error);
         });
-      setvisibleDemande(true);
+      bsN.visible = true;
+      bs[n] = bsN;
+      setDataBonsSortie(bs);
     }
+
+    // if (visibleDemande === true) {
+    //   setvisibleDemande(false);
+    // } else {
+    //   var nD = dataBonsSortie[n].idDemande;
+    //   axios
+    //     .get(`https://localhost:7165/api/Demande/info/${nD}`)
+    //     .then((result) => {
+    //       setDataDemande(result.data);
+    //       setDataDateDemande(result.data.dateDemande);
+    //     })
+    //     .catch((error) => {
+    //       toast("Error Demande");
+    //       console.log(error);
+    //     });
+    //   setvisibleDemande(true);
+    // }
   };
 
   const ShowPopUp = () => {
@@ -296,40 +320,44 @@ const BonSortieAffiche = () => {
                   </div>
                 </td>
               </tr>
-              {visibleDemande && (
-                <tr className="sousTitre">
-                  <th id="blank-th"></th>
-                  <th id="th-Center">Nom</th>
-                  <th id="th-Center">Prénom</th>
-                  <th id="th-Center">CIN</th>
-                  <th id="th-Center">Entité</th>
-                  <th id="th-Center">Date de demande</th>
-                  <th id="th-Center">Statut</th>
-                  <th id="th-Center">Actions</th>
-                </tr>
-              )}
-              {visibleDemande && (
-                <tr className="tr-ListProduit" id="bs-demande-info">
-                  <td id="blank-th"></td>
-                  <td id="th-Center">{dataDemande.nom}</td>
-                  <td id="th-Center">{dataDemande.prenom}</td>
-                  <td id="th-Center">{dataDemande.cin}</td>
-                  <td id="th-Center">{dataDemande.entite}</td>
-                  <td id="th-Center">
-                    {format(new Date(dataDateDemande), "dd/MM/yyyy")}
-                  </td>
-                  <td id="th-Center">{dataDemande.statut}</td>
-                  <td id="th-Center">
-                    <button
-                      id="btn-download"
-                      className="button-icons"
-                      onClick={ShowPopUp}
-                    >
-                      <IoSearch />
-                    </button>
-                  </td>
-                </tr>
-              )}
+              {opts.visible === false || opts.visible === undefined
+                ? false
+                : true && (
+                    <tr className="sousTitre">
+                      <th id="blank-th"></th>
+                      <th id="th-Center">Nom</th>
+                      <th id="th-Center">Prénom</th>
+                      <th id="th-Center">CIN</th>
+                      <th id="th-Center">Entité</th>
+                      <th id="th-Center">Date de demande</th>
+                      <th id="th-Center">Statut</th>
+                      <th id="th-Center">Actions</th>
+                    </tr>
+                  )}
+              {opts.visible === false || opts.visible === undefined
+                ? false
+                : true && (
+                    <tr className="tr-ListProduit" id="bs-demande-info">
+                      <td id="blank-th"></td>
+                      <td id="th-Center">{dataDemande.nom}</td>
+                      <td id="th-Center">{dataDemande.prenom}</td>
+                      <td id="th-Center">{dataDemande.cin}</td>
+                      <td id="th-Center">{dataDemande.entite}</td>
+                      <td id="th-Center">
+                        {format(new Date(dataDateDemande), "dd/MM/yyyy")}
+                      </td>
+                      <td id="th-Center">{dataDemande.statut}</td>
+                      <td id="th-Center">
+                        <button
+                          id="btn-download"
+                          className="button-icons"
+                          onClick={ShowPopUp}
+                        >
+                          <IoSearch />
+                        </button>
+                      </td>
+                    </tr>
+                  )}
             </tbody>
           ))}
         </table>
