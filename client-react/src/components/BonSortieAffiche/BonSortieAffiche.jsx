@@ -202,7 +202,7 @@ const BonSortieAffiche = () => {
                 <td id="th-Center">
                   <button
                     className="button-icons"
-                    id="btn-telecharger"
+                    id="btn-download"
                     onClick={() => getByIdDemande(i)}
                   >
                     <PiArrowBendDownRightDuotone />
@@ -255,7 +255,7 @@ const BonSortieAffiche = () => {
                       ? false
                       : true && (
                           <button
-                            id="btn-telecharger"
+                            id="btn-upload"
                             className="button-icons"
                             onClick={() => ShowPopUpPrint(i)}
                           >
@@ -290,7 +290,7 @@ const BonSortieAffiche = () => {
                   <td id="th-Center">{dataDemande.statut}</td>
                   <td id="th-Center">
                     <button
-                      id="btn-telecharger"
+                      id="btn-download"
                       className="button-icons"
                       onClick={ShowPopUp}
                     >
