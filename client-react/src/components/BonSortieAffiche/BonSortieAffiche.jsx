@@ -309,7 +309,7 @@ const BonSortieAffiche = () => {
                 </tr>
               )}
               {visibleDemande && (
-                <tr className="tr-ListProduit">
+                <tr className="tr-ListProduit" id="bs-demande-info">
                   <td id="blank-th"></td>
                   <td id="th-Center">{dataDemande.nom}</td>
                   <td id="th-Center">{dataDemande.prenom}</td>

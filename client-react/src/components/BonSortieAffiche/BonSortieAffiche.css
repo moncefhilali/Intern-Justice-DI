@@ -5,6 +5,14 @@
   border-bottom: 1px solid white;
 }
 
+#bs-demande-info {
+  background-color: white;
+}
+
+#bs-demande-info:hover {
+  background-color: rgb(202, 201, 201);
+}
+
 .BonSortieAffiche #popup-table tbody tr {
   transition: all 0.5s;
 }
