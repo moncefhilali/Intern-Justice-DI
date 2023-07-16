@@ -28,6 +28,21 @@ namespace InternJusticeMicroS.Controllers
             return await _internJusticeContext.Documents.ToListAsync();
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Document>> GetByIdDocument(int id)
+        {
+            if (_internJusticeContext.Documents == null)
+            {
+                return NotFound();
+            }
+            var Doc = await _internJusticeContext.Documents.FindAsync(id);
+            if (Doc == null)
+            {
+                return NotFound();
+            }
+            return Doc;
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create(Document Document)
         {
