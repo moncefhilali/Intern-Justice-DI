@@ -11,6 +11,7 @@ import PrintBonSortie from "../PrintBonSortie/PrintBonSortie";
 import { PiArrowBendDownRightDuotone } from "react-icons/pi";
 import { IoSearch } from "react-icons/io5";
 import { HiDocumentArrowUp } from "react-icons/hi2";
+import { HiDocumentArrowDown } from "react-icons/hi2";
 import { BsDownload } from "react-icons/bs";
 
 const BonSortieAffiche = () => {
@@ -170,6 +171,28 @@ const BonSortieAffiche = () => {
     }
   };
 
+  const ButtonDownload = (i) => {
+    var idD = dataBonsSortie[i].idDocument;
+    axios
+      .get(`https://localhost:7165/api/Document/${idD}`)
+      .then((result) => {
+        var filename = result.data.chemin;
+        // create link element
+        const link = document.createElement("a");
+        link.href = `https://localhost:7165/api/Document/file/download/${filename}`;
+        link.download = filename;
+        // dispatch a click event on the link element
+        document.body.appendChild(link);
+        link.click();
+        // clean up the link element
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        toast("Error Document");
+        console.log(error);
+      });
+  };
+
   return (
     <div className="BonSortieAffiche">
       <div class="header">
@@ -252,7 +275,15 @@ const BonSortieAffiche = () => {
                 <td id="th-Center" colSpan="2">
                   <div className="div-btn-telecharger">
                     {opts.idDocument !== null
-                      ? false
+                      ? true && (
+                          <button
+                            id="btn-download"
+                            className="button-icons"
+                            onClick={() => ButtonDownload(i)}
+                          >
+                            <HiDocumentArrowDown />
+                          </button>
+                        )
                       : true && (
                           <button
                             id="btn-upload"
