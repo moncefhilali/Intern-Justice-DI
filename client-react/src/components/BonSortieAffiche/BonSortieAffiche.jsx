@@ -81,23 +81,6 @@ const BonSortieAffiche = () => {
       bs[n] = bsN;
       setDataBonsSortie(bs);
     }
-
-    // if (visibleDemande === true) {
-    //   setvisibleDemande(false);
-    // } else {
-    //   var nD = dataBonsSortie[n].idDemande;
-    //   axios
-    //     .get(`https://localhost:7165/api/Demande/info/${nD}`)
-    //     .then((result) => {
-    //       setDataDemande(result.data);
-    //       setDataDateDemande(result.data.dateDemande);
-    //     })
-    //     .catch((error) => {
-    //       toast("Error Demande");
-    //       console.log(error);
-    //     });
-    //   setvisibleDemande(true);
-    // }
   };
 
   const ShowPopUp = () => {
