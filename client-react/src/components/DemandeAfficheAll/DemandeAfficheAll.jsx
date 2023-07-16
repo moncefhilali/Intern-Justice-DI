@@ -212,7 +212,7 @@ const DemandeAfficheAll = () => {
                 <td id="th-Center">
                   <div className="div-btn-telecharger">
                     <button
-                      id="btn-telecharger"
+                      id="btn-download"
                       className="button-icons"
                       onClick={() => ShowPopUp(i)}
                     >

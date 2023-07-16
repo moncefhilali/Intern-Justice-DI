@@ -6,7 +6,11 @@
   margin-right: auto;
 }
 
-#btn-telecharger {
+#btn-upload {
+  background-color: #fca130;
+}
+
+#btn-download {
   background-color: #4795da;
 }
 

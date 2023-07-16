@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./BonEntreeAffiche.css";
 import PrintBonEntree from "../PrintBonEntree/PrintBonEntree";
 import { HiDocumentArrowUp } from "react-icons/hi2";
+import { HiDocumentArrowDown } from "react-icons/hi2";
 import { BsDownload } from "react-icons/bs";
 
 const BonEntreeAffiche = () => {
@@ -111,6 +112,28 @@ const BonEntreeAffiche = () => {
     }
   };
 
+  const ButtonDownload = (i) => {
+    var idD = dataBEs[i].idDocument;
+    axios
+      .get(`https://localhost:7165/api/Document/${idD}`)
+      .then((result) => {
+        var filename = result.data.chemin;
+        // create link element
+        const link = document.createElement("a");
+        link.href = `https://localhost:7165/api/Document/file/download/${filename}`;
+        link.download = filename;
+        // dispatch a click event on the link element
+        document.body.appendChild(link);
+        link.click();
+        // clean up the link element
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        toast("Error Document");
+        console.log(error);
+      });
+  };
+
   return (
     <div className="BonEntree-Affiche">
       <div className="header">
@@ -142,10 +165,18 @@ const BonEntreeAffiche = () => {
                 <td>
                   <div className="div-btn-telecharger">
                     {opts.statut === "Validé"
-                      ? false
+                      ? true && (
+                          <button
+                            id="btn-download"
+                            className="button-icons"
+                            onClick={() => ButtonDownload(i)}
+                          >
+                            <HiDocumentArrowDown />
+                          </button>
+                        )
                       : true && (
                           <button
-                            id="btn-telecharger"
+                            id="btn-upload"
                             className="button-icons"
                             onClick={() => ShowPopUp(i)}
                           >
