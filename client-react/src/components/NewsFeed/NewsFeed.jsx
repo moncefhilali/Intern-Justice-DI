@@ -25,7 +25,7 @@ const NewsFeed = () => {
       url: "http://localhost:3000/slide4.jpg",
       title:
         "Le Ministre de la Justice passe en revue, lors d'une réunion avec l'ISESCO, les approches et politiques réussies adoptées par le Royaume pour lutter contre le terrorisme.",
-      href: "https://justice.gov.ma/2023/06/28/%d8%a8%d9%80%d9%84%d8%a7%d8%ba-%d8%b5%d8%ad%d9%81%d9%8a/",
+      href: "https://justice.gov.ma/2023/07/17/%d9%88%d8%b2%d9%8a%d8%b1-%d8%a7%d9%84%d8%b9%d8%af%d9%84-%d9%8a%d8%b3%d8%aa%d8%b9%d8%b1%d8%b6-%d9%81%d9%8a-%d9%84%d9%82%d8%a7%d8%a1-%d8%a8%d8%a7%d9%84%d8%a5%d9%8a%d8%b3%d9%8a%d8%b3%d9%83%d9%88-%d8%a7/",
     },
   ];
 
