@@ -37,6 +37,7 @@ const Navbar = () => {
               <NavDropdown.Item href="/Demande/MesDemandes">
                 MES DEMANDES DE SORTIE
               </NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item href="/Demande/Affichage">
                 TOUS LES DEMANDES DE SORTIE
               </NavDropdown.Item>
