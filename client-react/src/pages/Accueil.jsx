@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
+import NewsFeed from "../components/NewsFeed/NewsFeed";
 import { useIsAuthenticated } from "react-auth-kit";
 
 const Accueil = () => {
@@ -11,9 +12,7 @@ const Accueil = () => {
       <div>
         <Header />
         <Navbar />
-        <div className="header">
-          <h1>ACCUEIL</h1>
-        </div>
+        <NewsFeed />
       </div>
     );
   } else {
