@@ -37,6 +37,7 @@ const Navbar = () => {
               <NavDropdown.Item href="/Demande/MesDemandes">
                 MES DEMANDES DE SORTIE
               </NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item href="/Demande/Affichage">
                 TOUS LES DEMANDES DE SORTIE
               </NavDropdown.Item>
@@ -47,11 +48,11 @@ const Navbar = () => {
             {/* End of nested dropdown */}
 
             {/* Nested dropdown */}
-            <NavDropdown title="Nested Action">
+            {/* <NavDropdown title="Nested Action">
               <NavDropdown.Item href="#">Nested action 1</NavDropdown.Item>
               <NavDropdown.Item href="#">Nested action 2</NavDropdown.Item>
               <NavDropdown.Item href="#">Nested action 3</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
             {/* End of nested dropdown */}
 
             <NavDropdown.Divider />
