@@ -16,7 +16,7 @@ const ImageSlider = ({ slides }) => {
     borderRadius: "10px",
     backgroundPosition: "center",
     backgroundSize: "cover",
-    backgroundImage: `url(${slides[currentIndex].url})`,
+    backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.08) 23.4%, #10283E 100%),url(${slides[currentIndex].url})`,
   };
 
   const leftArrowStyles = {
@@ -41,6 +41,28 @@ const ImageSlider = ({ slides }) => {
     cursor: "pointer",
   };
 
+  const titleStyles = {
+    position: "absolute",
+    fontSize: "24px",
+    fontWeight: "600",
+    textDecoration: "none",
+    bottom: "0%",
+    padding: "50px",
+    color: "#fff",
+  };
+
+  const dotsContainerStyles = {
+    display: "flex",
+    justifyContent: "center",
+  };
+
+  const dotStyles = {
+    margin: "10px 5px",
+    cursor: "pointer",
+    fontSize: "12px",
+    color: "#185d99",
+  };
+
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
@@ -53,6 +75,10 @@ const ImageSlider = ({ slides }) => {
     setCurrentIndex(newIndex);
   };
 
+  const goToSlide = (slideIndex) => {
+    setCurrentIndex(slideIndex);
+  };
+
   return (
     <div style={sliderStyles}>
       <div style={leftArrowStyles} onClick={goToPrevious}>
@@ -61,7 +87,21 @@ const ImageSlider = ({ slides }) => {
       <div style={rightArrowStyles} onClick={goToNext}>
         <TfiArrowCircleRight />
       </div>
+      <a href={slides[currentIndex].href} style={titleStyles} target="_blank">
+        {slides[currentIndex].title}
+      </a>
       <div style={slideStyles}></div>
+      <div style={dotsContainerStyles}>
+        {slides.map((slide, slideIndex) => (
+          <div
+            key={slideIndex}
+            style={dotStyles}
+            onClick={() => goToSlide(slideIndex)}
+          >
+            {currentIndex === slideIndex ? "⬤" : "○"}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
