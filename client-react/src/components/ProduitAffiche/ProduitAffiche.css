@@ -9,11 +9,13 @@
   border-top: 1px solid white;
   border-left: 1px solid white;
   border-right: 1px solid white;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(202, 201, 201);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   padding: 10px;
   text-align: center;
+  cursor: pointer;
+  transition: color 0.5s;
 }
 
 .table-selector input[type="radio"] {
@@ -23,10 +25,12 @@
 }
 
 .table-selector input[type="radio"]:checked + label {
+  color: #185d99;
   border-bottom: 1px solid white;
-  border-top: 1px solid black;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-top: 1px solid rgb(202, 201, 201);
+  border-left: 1px solid rgb(202, 201, 201);
+  border-right: 1px solid rgb(202, 201, 201);
+  font-weight: 600;
 }
 
 #label-line {
