@@ -7,6 +7,7 @@ import AjouteBonEntree from "./pages/AjouteBonEntree";
 import MesDemandes from "./pages/MesDemandes";
 import AfficheDemande from "./pages/AfficheDemande";
 import AfficheBonSortie from "./pages/AfficheBonSortie";
+import ModifCategorie from "./pages/ModifCategorie";
 import AfficheProduit from "./pages/AfficheProduit";
 import AfficheUtilisateur from "./pages/AfficheUtilisateur";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/Demande/MesDemandes" element={<MesDemandes />} />
           <Route path="/Demande/Affichage" element={<AfficheDemande />} />
           <Route path="/Bonsortie/Affichage" element={<AfficheBonSortie />} />
+          <Route path="/Categorie/Modification" element={<ModifCategorie />} />
           <Route path="/Produit/Affichage" element={<AfficheProduit />} />
           <Route path="/Utilisateurs" element={<AfficheUtilisateur />} />
         </Routes>

@@ -19,12 +19,12 @@ const Navbar = () => {
           <a href="/">ACCUEIL</a>
           <NavDropdown className="dropdown" title="GESTION DU STOCK">
             {/* Nested dropdown */}
-            <NavDropdown title="GESTION D'ENTREE">
+            <NavDropdown title="GESTION D'ENTRÉE">
               <NavDropdown.Item href="/Bonentree/Ajoute">
-                AJOUTER UN BON D'ENTREE
+                AJOUTER UN BON D'ENTRÉE
               </NavDropdown.Item>
               <NavDropdown.Item href="/BonEntree/Affichage">
-                TOUS LES BON D'ENTREE
+                TOUS LES BON D'ENTRÉE
               </NavDropdown.Item>
             </NavDropdown>
             {/* End of nested dropdown */}
@@ -48,8 +48,10 @@ const Navbar = () => {
             {/* End of nested dropdown */}
 
             {/* Nested dropdown */}
-            <NavDropdown title="Nested Action">
-              <NavDropdown.Item href="#">Nested action 1</NavDropdown.Item>
+            <NavDropdown title="PARAMÉTRAGE">
+              <NavDropdown.Item href="/Categorie/Modification">
+                CATÉGORIES
+              </NavDropdown.Item>
               <NavDropdown.Item href="#">Nested action 2</NavDropdown.Item>
               <NavDropdown.Item href="#">Nested action 3</NavDropdown.Item>
             </NavDropdown>
