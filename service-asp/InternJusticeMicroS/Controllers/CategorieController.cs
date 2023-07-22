@@ -37,8 +37,8 @@ namespace InternJusticeMicroS.Controllers
 
 
         // select c1.id, c1.Nom, c2.Nom
-        // from Categorie c1 join Categorie c2
-        // on c1.id = c2.idCategorieMere
+        // from Categorie c1 left join Categorie c2
+        // on c1.idCategorieMere = c2.id
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<object>>> GetAllCategories()
         {
@@ -47,13 +47,21 @@ namespace InternJusticeMicroS.Controllers
                 return NotFound();
             }
             var result = await _internJusticeContext.Categories
-                .Join(_internJusticeContext.Categories, c1 => c1.id, c2 => c2.idCategorieMere, (c1, c2) => new { Categorie1 = c1, Categorie2 = c2 })
-                .Select(x => new
-                {
-                    x.Categorie1.id,
-                    Categorie1Nom = x.Categorie1.Nom,
-                    Categorie2Nom = x.Categorie2.Nom
-                })
+                .GroupJoin(
+                    _internJusticeContext.Categories,
+                    c1 => c1.idCategorieMere,
+                    c2 => c2.id,
+                    (c1, c2List) => new { Categorie1 = c1, Categorie2List = c2List }
+                )
+                .SelectMany(
+                    x => x.Categorie2List.DefaultIfEmpty(),
+                    (parent, child) => new
+                    {
+                        parent.Categorie1.id,
+                        Categorie1Nom = parent.Categorie1.Nom,
+                        Categorie2Nom = (child == null) ? null : child.Nom
+                    }
+                )
                 .ToListAsync();
             return result;
         }
