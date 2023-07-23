@@ -67,6 +67,24 @@ namespace InternJusticeMicroS.Controllers
         }
 
 
+        [HttpPut]
+        public async Task<ActionResult> Update(int _id, string _Nom)
+        {
+            // Find the existing entity in the database
+            var existingEntity = await _internJusticeContext.Categories.FindAsync(_id);
+
+            if (existingEntity != null)
+            {
+                // Update the 'Nom' property of the existing entity
+                existingEntity.Nom = _Nom;
+                await _internJusticeContext.SaveChangesAsync();
+
+                return Ok();
+            }
+            return NotFound();
+        }
+
+
 
     }
 }
