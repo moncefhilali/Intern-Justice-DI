@@ -82,7 +82,7 @@ const UtilisateurAffiche = () => {
                     false
                   ) : (
                     <button
-                      id="btn-download"
+                      id="btn-blue"
                       className="button-ajouter"
                       onClick={() => ShowPopUp(i)}
                     >

@@ -232,7 +232,7 @@ const BonSortieAffiche = () => {
                 <td id="th-Center">
                   <button
                     className="button-icons"
-                    id="btn-download"
+                    id="btn-blue"
                     onClick={() => getByIdDemande(i)}
                   >
                     <PiArrowBendDownRightDuotone />

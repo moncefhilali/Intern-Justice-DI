@@ -83,7 +83,7 @@ const CategorieModif = () => {
                 <td>{opts.categorie2Nom}</td>
                 <td id="th-Center">
                   <button
-                    id="btn-download"
+                    id="btn-blue"
                     className="button-ajouter"
                     onClick={() => ShowPopUp(i)}
                   >

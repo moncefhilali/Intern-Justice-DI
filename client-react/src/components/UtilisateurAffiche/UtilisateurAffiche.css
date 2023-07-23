@@ -1,3 +1,7 @@
+#btn-blue {
+  background-color: #185d99;
+}
+
 .UtilisateurAffiche #popup-table tbody tr {
   transition: all 0.5s;
 }
