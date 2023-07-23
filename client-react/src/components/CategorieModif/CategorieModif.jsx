@@ -22,6 +22,16 @@ const CategorieModif = () => {
       });
   };
 
+  // const ButtonModifier = () => {
+
+  //   axios.put(`https://localhost:7165/api/Categorie?_id=${}&_Nom=${}`).then(()=> {
+  //     toast('✔️La catégorie a bien été modifiée!')
+  //   }).catch((error)=> {
+  //     toast("❌La catégorie n'a pas été modifiée!")
+  //     console.log(error);
+  //   })
+  // }
+
   return (
     <div>
       <div class="header">
@@ -46,7 +56,11 @@ const CategorieModif = () => {
                 <td id="th-Center">{i + 1}</td>
                 <td>{opts.categorie1Nom}</td>
                 <td>{opts.categorie2Nom}</td>
-                <td id="th-Center">Modifier</td>
+                <td id="th-Center">
+                  <button id="btn-download" className="button-ajouter">
+                    Modifier
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
