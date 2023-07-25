@@ -201,6 +201,7 @@ const BonEntreeAjoute = () => {
       .get(`https://localhost:7165/api/Categorie/${idCategorieMere}`)
       .then((result) => {
         setDataSCategorie(result.data);
+        getDataProduit(result.data[0].id);
       })
       .catch((error) => {
         console.log(error);
