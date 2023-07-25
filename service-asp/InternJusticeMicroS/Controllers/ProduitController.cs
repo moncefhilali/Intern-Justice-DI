@@ -146,5 +146,29 @@ namespace InternJusticeMicroS.Controllers
             return result.Select(x => new { idBonEntree = x.idBonEntree , Designation = x.Designation, Qte = x.Qte, x.Observation, idMagasin = x.idMagasin }).ToList();
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update(Produit p)
+        {
+            // Find the existing entity in the database
+            var existingEntity = await _internJusticeContext.Produits.FindAsync(p.id);
+
+            if (existingEntity != null)
+            {
+                // Update the existing entity
+                if (p.idSousCategorie != null)
+                {
+                    existingEntity.idSousCategorie = p.idSousCategorie;
+                }
+                existingEntity.Designation = p.Designation;
+                existingEntity.Qte = p.Qte;
+                existingEntity.Marque = p.Marque;
+
+                await _internJusticeContext.SaveChangesAsync();
+
+                return Ok();
+            }
+            return NotFound();
+        }
+
     }
 }
