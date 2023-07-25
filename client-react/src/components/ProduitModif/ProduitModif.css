@@ -1,0 +1,35 @@
+.ProduitModif #popup-table tbody tr {
+  transition: all 0.5s;
+}
+
+.ProduitModif #popup-table thead th,
+.ProduitModif #popup-table tbody td {
+  border: 1px solid #818181;
+}
+
+.ProduitModif #popup-table th {
+  color: #185d99;
+  background-color: #d6d6d6;
+  border: 1px solid #818181;
+}
+.ProduitModif #popup-table td {
+  color: black;
+}
+
+.ProduitModif #popup-table tbody tr {
+  background-color: #f5f5f5;
+}
+
+.ProduitModif #popup-table tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.ProduitModif .div-popup input[type="text"] {
+  width: 90%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.td-width {
+  width: 50%;
+}
