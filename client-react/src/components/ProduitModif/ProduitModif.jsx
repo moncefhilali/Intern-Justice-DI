@@ -53,6 +53,7 @@ const ProduitModif = () => {
       .get(`https://localhost:7165/api/Categorie/${idCategorieMere}`)
       .then((result) => {
         setDataSCategorie(result.data);
+        document.getElementById("selectSCategorie").value = 0;
       })
       .catch((error) => {
         console.log(error);
@@ -63,6 +64,40 @@ const ProduitModif = () => {
     var idCategorieMere =
       dataCategorie[document.getElementById("selectCategorie").value].id;
     getDataSCategorie(idCategorieMere);
+  };
+
+  const ButtonModifier = () => {
+    var sc = document.getElementById("selectSCategorie");
+    var d = document.getElementById("designation");
+    var m = document.getElementById("marque");
+    var q = document.getElementById("qte");
+    if (d.value === "" || m.value === "" || q.value === "") {
+      toast("❌Tous les champs sont obligatoires!");
+    } else {
+      var p = {
+        id: dataProduits[dN].id,
+        idSousCategorie: null,
+        designation: d.value,
+        qte: q.value,
+        marque: m.value,
+        unite: "",
+        prix: 0,
+      };
+      if (sc.value !== "") {
+        p.idSousCategorie = dataSCategorie[sc.value].id;
+      }
+      axios
+        .put("https://localhost:7165/api/Produit", p)
+        .then(() => {
+          toast("✔️Le produit a bien été modifiée!");
+          HidePopUp();
+          getProduits();
+        })
+        .catch((error) => {
+          toast("❌Le produit n'a pas été modifiée!");
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -156,7 +191,7 @@ const ProduitModif = () => {
                   </td>
                   <td id="th-Center" className="td-width">
                     <select id="selectCategorie" onChange={OnChangeCategorie}>
-                      <option value="0" hidden>
+                      <option value="" hidden>
                         {dataProduits[dN].categorie2Nom}
                       </option>
                       {dataCategorie.map((opts, i) => (
@@ -166,7 +201,7 @@ const ProduitModif = () => {
                   </td>
                   <td id="th-Center" colSpan="2">
                     <select id="selectSCategorie">
-                      <option value="0" hidden>
+                      <option value="" hidden>
                         {dataProduits[dN].categorie1Nom}
                       </option>
                       {dataSCategorie.map((opts, i) => (
@@ -182,13 +217,13 @@ const ProduitModif = () => {
                 </tr>
                 <tr>
                   <td id="th-Center">
-                    <input type="text" value={dataProduits[dN].designation} />
+                    <input type="text" id="designation" />
                   </td>
                   <td id="th-Center">
-                    <input type="text" value={dataProduits[dN].marque} />
+                    <input type="text" id="marque" />
                   </td>
                   <td id="th-Center">
-                    <input type="text" value={dataProduits[dN].qte} />
+                    <input type="number" id="qte" min="0" />
                   </td>
                 </tr>
               </tbody>
@@ -202,7 +237,9 @@ const ProduitModif = () => {
                   </button>
                 </td>
                 <td>
-                  <button id="popup-done">Modifier</button>
+                  <button id="popup-done" onClick={ButtonModifier}>
+                    Modifier
+                  </button>
                 </td>
               </tr>
             </table>
