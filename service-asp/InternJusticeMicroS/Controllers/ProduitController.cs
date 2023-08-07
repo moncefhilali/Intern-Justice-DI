@@ -32,6 +32,29 @@ namespace InternJusticeMicroS.Controllers
         // on p.idSousCategorie = c1.id
         // inner join Categorie c2
         // on c2.id = c1.idCategorieMere
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<object>>> GetAllProduits()
+        {
+            if (_internJusticeContext.Produits == null)
+            {
+                return NotFound();
+            }
+            var result = await _internJusticeContext.Produits
+                .Join(_internJusticeContext.Categories, p => p.idSousCategorie, c1 => c1.id, (p, c1) => new { Produit = p, Categorie1 = c1 })
+                .Join(_internJusticeContext.Categories, pc1 => pc1.Categorie1.idCategorieMere, c2 => c2.id, (pc1, c2) => new { pc1.Produit, Categorie1 = pc1.Categorie1, Categorie2 = c2 })
+                .Select(x => new
+                {
+                    x.Produit.id,
+                    Categorie2Nom = x.Categorie2.Nom,
+                    Categorie1Nom = x.Categorie1.Nom,
+                    x.Produit.Designation,
+                    x.Produit.Marque,
+                    x.Produit.Qte
+                })
+                .ToListAsync();
+            return result;
+        }
+
         [HttpGet("stock")]
         public async Task<ActionResult<IEnumerable<object>>> GetStockProduits()
         {
@@ -121,6 +144,30 @@ namespace InternJusticeMicroS.Controllers
                                 .Where(w => w.idBonEntree == idBonEntree)
                                 .ToListAsync();
             return result.Select(x => new { idBonEntree = x.idBonEntree , Designation = x.Designation, Qte = x.Qte, x.Observation, idMagasin = x.idMagasin }).ToList();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(Produit p)
+        {
+            // Find the existing entity in the database
+            var existingEntity = await _internJusticeContext.Produits.FindAsync(p.id);
+
+            if (existingEntity != null)
+            {
+                // Update the existing entity
+                if (p.idSousCategorie != null)
+                {
+                    existingEntity.idSousCategorie = p.idSousCategorie;
+                }
+                existingEntity.Designation = p.Designation;
+                existingEntity.Qte = p.Qte;
+                existingEntity.Marque = p.Marque;
+
+                await _internJusticeContext.SaveChangesAsync();
+
+                return Ok();
+            }
+            return NotFound();
         }
 
     }

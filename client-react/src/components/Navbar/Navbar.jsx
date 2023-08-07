@@ -52,7 +52,9 @@ const Navbar = () => {
               <NavDropdown.Item href="/Categorie/Modification">
                 CATÉGORIES
               </NavDropdown.Item>
-              <NavDropdown.Item href="#">Nested action 2</NavDropdown.Item>
+              <NavDropdown.Item href="/Produit/Modification">
+                PRODUITS
+              </NavDropdown.Item>
             </NavDropdown>
             {/* End of nested dropdown */}
 

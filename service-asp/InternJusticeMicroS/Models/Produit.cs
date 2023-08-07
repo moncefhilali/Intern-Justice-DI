@@ -6,7 +6,7 @@ namespace InternJusticeMicroS.Models
     public class Produit : Entity
     {
         [Column("idSousCategorie")]
-        public int idSousCategorie { get; set; }
+        public int? idSousCategorie { get; set; }
 
         [Column("Designation")]
         public string Designation { get; set; }
